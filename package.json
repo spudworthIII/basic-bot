@@ -1,0 +1,28 @@
+{
+  "name": "basic-bot",
+  "version": "1.0.0",
+  "description": "a discord bot with the intention to stick as closely to the core discord.js as possible",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spudworthIII/basic-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spudworthIII/basic-bot/issues"
+  },
+  "homepage": "https://github.com/spudworthIII/basic-bot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.31.0",
+    "discord.js": "^13.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0"
+  }
+}
