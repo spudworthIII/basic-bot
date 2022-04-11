@@ -15,6 +15,7 @@ module.exports = {
 		if (interaction.member?.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
 			const user = interaction.options.getMember('target');
 			if (interaction.member == user) {
+				console.log(user);
 				await interaction.reply('you can\'t kick yourself');
 			}
 			else {
