@@ -7,6 +7,6 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'database.sqlite',
 });
 
-const Users = require('./models/Users.js')(sequelize, Sequelize.DataTypes);
+const Users = require('./models/UsersSchema.js')(sequelize, Sequelize.DataTypes);
 
 module.exports = { Users };

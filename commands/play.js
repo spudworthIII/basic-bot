@@ -5,11 +5,11 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
-		.setDescription('plays au')
+		.setDescription('plays audio of song')
 		.addStringOption((option) =>
-			option
-				.setName('name of video')
-				.setRequired('true'),
+			option.setName('videoname')
+				.setDescription('the video whos audio will be played')
+				.setRequired(true),
 		),
 	async execute(interaction) {
 		const voiceChannel = interaction.member.voice.channel;

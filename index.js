@@ -1,10 +1,10 @@
 // the needed classes from discord.js
 const fs = require('node:fs');
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection, Intents, DiscordAPIError } = require('discord.js');
 const { token, MONGODB_SRV } = require('./config.json');
 // const { Users } = require('./models/Users.js');
 // a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', 'CHANNEL'] });
 
 const mongoose = require('mongoose');
 
@@ -19,6 +19,29 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
+// const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+
+// for (const file of eventFiles) {
+// 	const event = require(`./events/${file}`);
+// 	if (event.once) {
+// 		client.once(event.name, (...args) => event.execute(...args));
+// 	}
+// 	else {
+// 		client.on(event.name, (...args) => event.execute(...args));
+// 	}
+//  }
+
+const Usermodel = require('./models/UsersSchema');
+client.on('guildMemberAdd', async (member) => {
+	console.log(member.user);
+	// eslint-disable-next-line prefer-const
+	let userprofile = await Usermodel.create({
+		userID: member.id,
+		serverID: member.guild.id,
+		warnings: 0,
+	});
+	userprofile.save();
+});
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -35,18 +58,18 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
-
+console.log(MONGODB_SRV);
 mongoose.connect(MONGODB_SRV, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	userFineAndModify: false,
+
 }).then(() => {
 	console.log('connected to database');
-}).catch((error) =>{
+}).catch((error) => {
 	console.log(error);
 });
 
-// when the client is ready it will say ready in the terminal
+// // when the client is ready it will say ready in the terminal
 client.once('ready', () => {
 	console.log('ready!');
 },
